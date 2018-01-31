@@ -1,0 +1,93 @@
+OPEN DATA "E:\Justin\Documents\USF\6_Spring 2018\Forcasting\Hw2\HW2.xls"
+CALENDAR(M) 2002:10
+DATA(FORMAT=XLS,ORG=COLUMNS) 2002:10 2016:04 cpisouth employ gas revmiles ridership post08 realfare days $
+ realgas CPI_index
+**realgas and CPI_index were created in excel using 
+ VCV
+# CPISOUTH EMPLOY REVMILES RIDERSHIP POST08 REALFARE DAYS REALGAS
+
+Covariance\Correlation Matrix
+           CPISOUTH      EMPLOY       REVMILES      RIDERSHIP     POST08     REALFARE      DAYS       REALGAS
+CPISOUTH   43432.5664       0.99935       0.99757       0.99853     0.80479     0.99779     0.99464     0.98218
+EMPLOY     2.1537e+08    1.0694e+12       0.99784       0.99811     0.78835     0.99641     0.99538     0.98012
+REVMILES   2.4302e+08    1.2062e+12    1.3664e+12       0.99765     0.77252     0.99698     0.99802     0.98302
+RIDERSHIP  4.4708e+08    2.2175e+12    2.5054e+12    4.6155e+12     0.79551     0.99567     0.99504     0.98506
+POST08       127.3688   619098.3129   685759.9064  1297853.1472      0.5767     0.80008     0.75752     0.78154
+REALFARE     237.7210  1177952.5139  1332306.1093  2445370.0491      0.6946      1.3069     0.99516     0.97949
+DAYS        4374.9212 21724847.3252 24622437.2973 45117430.7975     12.1411     24.0109    445.4417     0.97653
+REALGAS      463.8285  2296711.9769  2603854.0754  4795453.3546      1.3449      2.5373     46.7025      5.1347
+
+
+LINREG RIDERSHIP
+# Constant CPISOUTH EMPLOY REVMILES POST08 REALFARE DAYS REALGAS
+
+Linear Regression - Estimation by Least Squares
+Dependent Variable RIDERSHIP
+Monthly Data From 2002:10 To 2016:04
+Usable Observations                       163
+Degrees of Freedom                        155
+Centered R^2                        0.8242890
+R-Bar^2                             0.8163536
+Uncentered R^2                      0.9983798
+Mean of Dependent Variable       2138448.6196
+Std Error of Dependent Variable   206934.6121
+Standard Error of Estimate         88679.7188
+Sum of Squared Residuals          1.21893e+12
+Regression F(7,155)                  103.8757
+Significance Level of F             0.0000000
+Log Likelihood                     -2084.2097
+Durbin-Watson Statistic                1.0107
+
+    Variable                        Coeff      Std Error      T-Stat      Signif
+************************************************************************************
+1.  Constant                     -220873.3318  280518.7313     -0.78737  0.43226494
+2.  CPISOUTH                        9576.7406    3050.2343      3.13967  0.00202563
+3.  EMPLOY                            -0.2228       0.4110     -0.54212  0.58851620
+4.  REVMILES                           0.4542       0.1792      2.53483  0.01224166
+5.  POST08                         38145.6518   56817.4894      0.67137  0.50298312
+6.  REALFARE                     -636393.7549  150392.3174     -4.23156  0.00003959
+7.  DAYS                           27460.9772    7126.1710      3.85354  0.00017010
+8.  REALGAS                        88154.8522   22718.4236      3.88032  0.00015390
+**Employment should raise the ridership as it would mean there are more riders going to work.  The rest of the signs make sense.
+SET LN_CPISOUTH = LOG(CPISOUTH)
+Set ln_ridership = log(ridership)
+Set ln_Employ = log(employ)
+Set ln_revmiles = log(revmiles)
+Set ln_realfare = log(realfare)
+set ln_days = log(days) 
+Set Ln_gas = log(gas)
+Set Ln_realgas = log(gas)
+LINREG LN_RIDERSHIP
+# Constant LN_CPISOUTH LN_EMPLOY LN_REVMILES POST08 LN_REALFARE LN_DAYS LN_REALGAS
+
+Linear Regression - Estimation by Least Squares
+Dependent Variable LN_RIDERSHIP
+Monthly Data From 2002:10 To 2016:04
+Usable Observations                       163
+Degrees of Freedom                        155
+Centered R^2                        0.8341141
+R-Bar^2                             0.8266225
+Uncentered R^2                      0.9999926
+Mean of Dependent Variable       14.570905383
+Std Error of Dependent Variable   0.097328240
+Standard Error of Estimate        0.040526140
+Sum of Squared Residuals         0.2545670477
+Regression F(7,155)                  111.3396
+Significance Level of F             0.0000000
+Log Likelihood                       295.3612
+Durbin-Watson Statistic                1.0355
+
+    Variable                        Coeff      Std Error      T-Stat      Signif
+************************************************************************************
+1.  Constant                      6.027339323  1.684241426      3.57867  0.00046132
+2.  LN_CPISOUTH                   0.616832961  0.314667368      1.96027  0.05175723
+3.  LN_EMPLOY                     0.042028580  0.201082719      0.20901  0.83471378
+4.  LN_REVMILES                   0.275666051  0.094173816      2.92720  0.00393551
+5.  POST08                        0.034227188  0.026456786      1.29370  0.19769300
+6.  LN_REALFARE                  -0.348073782  0.079230504     -4.39318  0.00002061
+7.  LN_DAYS                       0.248220811  0.068369638      3.63057  0.00038369
+8.  LN_REALGAS                    0.096809768  0.021860730      4.42848  0.00001784
+
+** The signs make sense now.  Employment is positive as it logically should be. 
+** Elasticity of demand is the -.348 as in a log log model the coefcient is the % change in the dependent given a 1% change in the indpendent 
+**The cross price elasticity with gasoline is .0968 
